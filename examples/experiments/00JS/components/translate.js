@@ -8,7 +8,6 @@ AFRAME.registerComponent('translate', {
   init: function () {
     this.p0 = new THREE.Vector3();
     this.p0.copy(this.el.object3D.position);
-    this.t = 0;
     // Convert axis into a unit vector
 
     this.axis = new THREE.Vector3();
@@ -27,9 +26,9 @@ AFRAME.registerComponent('translate', {
     if (distanceTranslated < this.data.length) {
       var posUpdate = new THREE.Vector3();
       posUpdate.copy(this.axis);
-      this.t = this.t + (timeDelta * this.speed / 1000);
-      posUpdate.multiplyScalar(this.t);
-      posUpdate.add(this.p0);
+      var t = (timeDelta * this.speed / 1000);
+      posUpdate.multiplyScalar(t);
+      posUpdate.add(this.el.object3D.position);
       // console.log("Pos update=", posUpdate);
       this.el.setAttribute('position', {
         x: posUpdate.x,
